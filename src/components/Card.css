@@ -1,0 +1,24 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #fafafa;
+  padding: 10px;
+  border: 1px solid #a9a9a9;
+  width: auto;
+  height: auto;
+}
+
+.userName {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.infoContainer svg {
+  color: black;
+  margin-right: 5px;
+  font-size: 13px;
+}
