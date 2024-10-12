@@ -7,8 +7,8 @@ import UserCard from "./components/Card";
 
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
-const App = () => {
-  const [error, setError] = useState();
+const UserList = () => {
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -80,7 +80,7 @@ const App = () => {
     });
     setFilteredUsers(sortedUsers);
   };
-  
+
   // toggle button
   const toggleSortOder = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -90,13 +90,12 @@ const App = () => {
   // handle sort by button click
   const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    console.log(value, "valuvalval");
 
     if (value === "name" || value === "email") {
       setSortBy(value);
       sortUsers();
     } else {
-      console.error("Invalid sort criteria selected");
+      setError("Invalid sorting selection");
     }
   };
 
@@ -148,4 +147,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default UserList;
