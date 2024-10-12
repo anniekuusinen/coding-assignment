@@ -34,7 +34,7 @@ const App = () => {
   }, []);
 
   // handle search input change
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchItem = e.target.value.toLowerCase();
     setSearchTerm(searchItem);
     const filtered = searchItem
@@ -65,8 +65,7 @@ const App = () => {
       : users;
     setFilteredUsers(filtered);
   };
-
-  // sort users by name and email
+  // sort users by name or email
   const sortUsers = () => {
     const sortedUsers = filteredUsers.slice().sort((a, b) => {
       const itemA =
@@ -81,7 +80,7 @@ const App = () => {
     });
     setFilteredUsers(sortedUsers);
   };
-
+  
   // toggle button
   const toggleSortOder = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -89,9 +88,16 @@ const App = () => {
   };
 
   // handle sort by button click
-  const handleSortByChange = (e: any) => {
-    setSortBy(e.target.value);
-    sortUsers();
+  const handleSortByChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    console.log(value, "valuvalval");
+
+    if (value === "name" || value === "email") {
+      setSortBy(value);
+      sortUsers();
+    } else {
+      console.error("Invalid sort criteria selected");
+    }
   };
 
   // handle state
@@ -115,8 +121,8 @@ const App = () => {
         />
         <p>Sort by: </p>
         <select onChange={handleSortByChange}>
-          <option value="1">Name</option>
-          <option value="2">Email</option>
+          <option value="name">Name</option>
+          <option value="email">Email</option>
         </select>
         <button onClick={toggleSortOder}>
           {sortOrder === "asc" ? "Ascending order" : "Descending order"}
