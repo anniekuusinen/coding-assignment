@@ -8,7 +8,7 @@ import "./GridLayout.css";
 
 const Grid: FunctionComponent<
   HTMLAttributes<PropsWithChildren<HTMLDivElement>>
-> = ({ children, className, ...props }) => {
+> = ({ children, ...props }) => {
   return (
     <div className="gridLayout" {...props}>
       {children}

@@ -1,7 +1,7 @@
 import { Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { User } from "./interfaces/interfaces";
-import "./App.css";
+import "./UserList.css";
 import Grid from "./components/GridLayout";
 import UserCard from "./components/Card";
 
@@ -16,6 +16,7 @@ const App = () => {
   const [sortBy, setSortBy] = useState<"name" | "email">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+  // fetch data
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -32,18 +33,42 @@ const App = () => {
     getUsers();
   }, []);
 
+  // handle search input change
   const handleSearch = (e: any) => {
     const searchItem = e.target.value.toLowerCase();
     setSearchTerm(searchItem);
     const filtered = searchItem
       ? users.filter((user: User) => {
-          return user.name.toLowerCase().includes(searchTerm.toLowerCase());
+          const nameMatch = user.name
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+          const phoneMatch = user.phone.toString().includes(searchTerm);
+          const websiteMatch = user.website
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+          const emailMatch = user.email
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+          const addressMatch = Object.values(user.address)
+            .join(" ")
+            .toLowerCase()
+            .includes(searchItem);
+
+          return (
+            nameMatch ||
+            phoneMatch ||
+            emailMatch ||
+            websiteMatch ||
+            addressMatch
+          );
         })
       : users;
     setFilteredUsers(filtered);
   };
+
+  // sort users by name and email
   const sortUsers = () => {
-    const sortedUsers = [...filteredUsers].sort((a, b) => {
+    const sortedUsers = filteredUsers.slice().sort((a, b) => {
       const itemA =
         sortBy === "name" ? a.name.toLowerCase() : a.email.toLowerCase();
       const itemB =
@@ -56,20 +81,27 @@ const App = () => {
     });
     setFilteredUsers(sortedUsers);
   };
+
+  // toggle button
   const toggleSortOder = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     sortUsers();
   };
+
+  // handle sort by button click
   const handleSortByChange = (e: any) => {
     setSortBy(e.target.value);
     sortUsers();
   };
+
+  // handle state
   if (isLoading) {
     return <Alert severity="info">Loading list users...</Alert>;
   }
   if (error) {
     return <Alert severity="error">Error loading list of users.</Alert>;
   }
+
   return (
     <div className="container">
       <div className="title">List of users</div>
@@ -77,7 +109,7 @@ const App = () => {
       <div className="filterAndSortButtons">
         <input
           type="text"
-          placeholder="Search for user"
+          placeholder="Type to search..."
           value={searchTerm}
           onChange={handleSearch}
         />

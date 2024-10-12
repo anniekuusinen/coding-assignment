@@ -16,24 +16,23 @@ const UserCard: FunctionComponent<User> = ({
       <div className="userName">
         <div>{name}</div>
       </div>
-      <div>
-        <div className="infoContainer">
-          <div>
-            <Phone />
-            {phone}
-          </div>
-          <div>
-            <Email />
-            {email}
-          </div>
-          <div>
-            <Computer />
-            {website}
-          </div>
-          <div>
-            <Pin />
-            {address.suite}, {address.street}, {address.zipcode}, {address.city}
-          </div>
+
+      <div className="infoContainer">
+        <div>
+          <Phone />
+          {phone}
+        </div>
+        <div>
+          <Email />
+          {email}
+        </div>
+        <div>
+          <Computer />
+          {website}
+        </div>
+        <div>
+          <Pin />
+          {address.suite}, {address.street}, {address.zipcode}, {address.city}
         </div>
       </div>
     </div>
